@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import AnimatedScribble from './ui/AnimatedScribble';
 import { CheckIcon, Users, BookOpen, RocketIcon } from 'lucide-react';
@@ -208,7 +207,7 @@ const Benefits = () => {
                 <div className="p-4 bg-black/30 rounded-lg relative">
                   {/* WhatsApp chat mockup */}
                   <div className="bg-[#128C7E] h-10 rounded-t-lg flex items-center px-3">
-                    <div className="text-white font-bold">AfriNova Pulse Squad</div>
+                    <div className="text-white font-bold">AfriPulse Squad</div>
                   </div>
                   
                   <div className="bg-[#E5DDD5] p-2 rounded-b-lg">
@@ -224,7 +223,7 @@ const Benefits = () => {
                     </div>
                     
                     <div className="bg-white p-2 rounded-lg ml-auto max-w-[80%]">
-                      <div className="text-black text-sm">KES 240,000! Thanks for the mentoring @AfriNova Team 🙏</div>
+                      <div className="text-black text-sm">KES 240,000! Thanks for the mentoring @AfriPulse Team 🙏</div>
                       <div className="text-right text-xs text-gray-500">10:24 AM</div>
                     </div>
                   </div>
