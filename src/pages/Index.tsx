@@ -1,12 +1,45 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useEffect } from 'react';
+import Hero from '@/components/Hero';
+import RecruitmentProcess from '@/components/RecruitmentProcess';
+import Benefits from '@/components/Benefits';
+import JoinSection from '@/components/JoinSection';
+import Footer from '@/components/Footer';
 
 const Index = () => {
+  useEffect(() => {
+    // Initialize intersection observer for animation
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -100px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('section-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    
+    // Observe all sections with the section-reveal class
+    document.querySelectorAll('.section-reveal').forEach(section => {
+      observer.observe(section);
+    });
+    
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+  
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-afrinova-black text-white overflow-x-hidden">
+      <Hero />
+      <RecruitmentProcess />
+      <Benefits />
+      <JoinSection />
+      <Footer />
     </div>
   );
 };
