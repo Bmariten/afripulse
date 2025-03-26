@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import PulseButton from './ui/PulseButton';
 import AnimatedScribble from './ui/AnimatedScribble';
@@ -16,7 +15,8 @@ const Hero = () => {
       const elements = counterRef.current.querySelectorAll('.cash-number');
       
       elements.forEach((elem, i) => {
-        (elem as HTMLElement).style.setProperty('--delay', i.toString());
+        const htmlElem = elem as HTMLElement;
+        htmlElem.style.setProperty('--delay', i.toString());
       });
       
       let currentIndex = 0;
@@ -30,8 +30,9 @@ const Hero = () => {
         elements.forEach(elem => {
           elem.textContent = numbers[currentIndex];
           elem.classList.remove('animate-cash-pop');
-          // Force reflow
-          void elem.offsetWidth;
+          // Force reflow - Fix TS error by using appropriate type assertion
+          const htmlElem = elem as HTMLElement;
+          void htmlElem.offsetWidth;
           elem.classList.add('animate-cash-pop');
         });
         
@@ -136,7 +137,7 @@ const Hero = () => {
                 </div>
               </div>
               
-              {/* Cash stack visualization */}
+              {/* Cash stack visualization - Improved visibility */}
               <div className="md:w-1/2 flex flex-col items-center">
                 <div className="p-4 bg-afrinova-black/60 backdrop-blur-md rounded-lg border border-afrinova-gold/30 shadow-lg relative">
                   <div className="absolute -top-2 -left-2 bg-afrinova-red text-white text-xs font-bold py-1 px-2 rounded">
@@ -158,7 +159,7 @@ const Hero = () => {
                         >
                           <div className="absolute inset-0 flex items-center justify-center">
                             {i === 2 && (
-                              <span className="font-bold text-green-800 text-xl">KES 200,000+</span>
+                              <span className="font-bold text-green-800 text-xl shadow-sm">KES 200,000+</span>
                             )}
                           </div>
                         </div>
