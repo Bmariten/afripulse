@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import AnimatedScribble from './ui/AnimatedScribble';
 import PulseButton from './ui/PulseButton';
 import { CheckIcon, Calendar, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const JoinSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -111,7 +112,7 @@ const JoinSection = () => {
               <div className="flex justify-center mb-4">
                 <div className="relative w-24 h-16 bg-gray-800 rounded-lg p-2">
                   <div className="text-xs text-gray-400 mb-1">Direct Message</div>
-                  <div className="text-white text-sm">You're in! Welcome to AfriNova Pulse 🚀</div>
+                  <div className="text-white text-sm">You're in! Welcome to AfriPulse 🚀</div>
                 </div>
               </div>
               
@@ -145,13 +146,14 @@ const JoinSection = () => {
           
           <div className="flex flex-col items-center">
             <div className="mb-8">
-              <PulseButton 
-                variant="neon" 
-                className="text-lg"
-                onClick={() => window.open('https://forms.google.com', '_blank')}
-              >
-                Pulse In Now <ArrowRight className="inline-block ml-2" size={18} />
-              </PulseButton>
+              <Link to="/form">
+                <PulseButton 
+                  variant="neon" 
+                  className="text-lg"
+                >
+                  Pulse In Now <ArrowRight className="inline-block ml-2" size={18} />
+                </PulseButton>
+              </Link>
             </div>
             
             <div className="mb-8">

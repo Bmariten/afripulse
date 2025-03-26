@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import PulseButton from './ui/PulseButton';
 import AnimatedScribble from './ui/AnimatedScribble';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const counterRef = useRef<HTMLDivElement>(null);
@@ -91,13 +92,15 @@ const Hero = () => {
         </h1>
         
         <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-          Join AfriNova Pulse: Start Free, Pay After You Earn, Thrive Across Africa & the Middle East.
+          Join AfriPulse: Start Free, Pay After You Earn, Thrive Across Africa & the Middle East.
         </p>
         
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-16">
-          <PulseButton variant="neon" onClick={() => window.open('https://forms.google.com', '_blank')}>
-            Pulse In
-          </PulseButton>
+          <Link to="/form">
+            <PulseButton variant="neon">
+              Pulse In
+            </PulseButton>
+          </Link>
           
           <div ref={counterRef} className="glass-card px-6 py-4 rounded-xl flex items-center">
             <span className="text-white mr-2">Earn up to</span>

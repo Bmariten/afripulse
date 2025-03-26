@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="container mx-auto max-w-5xl relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center mb-12">
           <div className="mb-8 md:mb-0">
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-afrinova-neon to-afrinova-gold bg-clip-text text-transparent mb-2">AfriNova Pulse</h2>
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-afrinova-neon to-afrinova-gold bg-clip-text text-transparent mb-2">AfriPulse</h2>
             <p className="text-gray-400">Where Nairobi Grit Meets Middle East Gold</p>
           </div>
           
@@ -41,7 +41,7 @@ const Footer = () => {
         
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="text-gray-500 text-sm mb-4 md:mb-0">
-            © {new Date().getFullYear()} AfriNova Pulse. All rights reserved.
+            © {new Date().getFullYear()} AfriPulse. All rights reserved.
           </div>
           
           <div className="flex gap-6">
