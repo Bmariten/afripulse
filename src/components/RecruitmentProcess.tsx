@@ -76,7 +76,7 @@ const RecruitmentProcess = () => {
                 <div className="flex items-center gap-4">
                   <Linkedin className="text-blue-400" size={24} />
                   <div className="text-white">
-                    <div className="font-bold">AfriNova Pulse</div>
+                    <div className="font-bold">AfriPulse</div>
                     <div className="text-sm text-gray-400">1,250 followers</div>
                   </div>
                 </div>
