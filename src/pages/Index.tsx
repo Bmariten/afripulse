@@ -5,6 +5,7 @@ import RecruitmentProcess from '@/components/RecruitmentProcess';
 import Benefits from '@/components/Benefits';
 import JoinSection from '@/components/JoinSection';
 import Footer from '@/components/Footer';
+import ProgramDetails from '@/components/ProgramDetails';
 
 const Index = () => {
   useEffect(() => {
@@ -36,6 +37,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-afrinova-black text-white overflow-x-hidden">
       <Hero />
+      <ProgramDetails />
       <RecruitmentProcess />
       <Benefits />
       <JoinSection />

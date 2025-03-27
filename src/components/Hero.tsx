@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import PulseButton from './ui/PulseButton';
 import AnimatedScribble from './ui/AnimatedScribble';
@@ -150,18 +151,18 @@ const Hero = () => {
                       {[...Array(5)].map((_, i) => (
                         <div 
                           key={i} 
-                          className="w-56 h-12 bg-gradient-to-r from-green-100 to-green-200 border border-green-300 rounded relative"
+                          className="w-56 h-12 bg-gradient-to-r from-green-500 to-green-400 border border-green-300 rounded relative shadow-lg"
                           style={{ 
                             marginTop: i > 0 ? '-40px' : '0',
                             transform: `rotate(${(i-2) * 2}deg)`,
                             zIndex: 5-i 
                           }}
                         >
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            {i === 2 && (
-                              <span className="font-bold text-green-800 text-xl shadow-sm">KES 200,000+</span>
-                            )}
-                          </div>
+                          {i === 2 && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-green-400/20 to-green-300/10 backdrop-blur-sm rounded">
+                              <span className="font-bold text-white text-xl shadow-[0_0_10px_rgba(0,255,102,0.8)] drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">KES 200,000+</span>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>

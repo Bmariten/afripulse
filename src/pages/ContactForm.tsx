@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import PulseButton from '@/components/ui/PulseButton';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, CheckIcon, Send } from 'lucide-react';
+import { ArrowLeft, CheckIcon, Loader2, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Define form schema with validation
@@ -28,6 +28,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 const ContactForm = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -43,21 +44,59 @@ const ContactForm = () => {
   });
 
   const onSubmit = async (data: FormValues) => {
-    // In a real implementation, this would send the data to a server or email service
-    console.log('Form submitted with data:', data);
+    setIsSubmitting(true);
     
-    // Simulate API call with a timeout
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // Show success toast
-    toast({
-      title: "Application Submitted!",
-      description: "We'll review your details and get back to you shortly.",
-      variant: "default",
-    });
-    
-    // Reset form
-    form.reset();
+    try {
+      // Create form data for submission
+      const formData = new FormData();
+      
+      // Add all form values to formData
+      Object.entries(data).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+      
+      // Add form name for email service to identify
+      formData.append('form-name', 'afripulse-contact');
+      
+      // Send data via email using formSubmit.co service
+      const response = await fetch('https://formsubmit.co/ask@afripulse.app', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json',
+        },
+      });
+      
+      if (response.ok) {
+        // Show success toast
+        toast({
+          title: "Application Submitted!",
+          description: "We'll review your details and get back to you shortly.",
+          variant: "default",
+        });
+        
+        // Reset form
+        form.reset();
+      } else {
+        // Show error toast if response is not OK
+        toast({
+          title: "Submission Failed",
+          description: "There was a problem sending your application. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      
+      // Show error toast on exception
+      toast({
+        title: "Submission Failed",
+        description: "There was a problem sending your application. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -79,7 +118,7 @@ const ContactForm = () => {
           </div>
           
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" data-netlify="true" name="afripulse-contact">
               {/* Personal Information */}
               <div className="space-y-4">
                 <h2 className="text-xl font-semibold text-afrinova-gold">Personal Information</h2>
@@ -206,9 +245,18 @@ const ContactForm = () => {
               </div>
               
               <div className="pt-4 flex justify-center">
-                <PulseButton type="submit" variant="neon" className="w-full max-w-xs flex items-center justify-center gap-2">
-                  <Send size={18} />
-                  Submit Application
+                <PulseButton type="submit" variant="neon" className="w-full max-w-xs flex items-center justify-center gap-2" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <Send size={18} />
+                      Submit Application
+                    </>
+                  )}
                 </PulseButton>
               </div>
               
