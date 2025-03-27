@@ -1,7 +1,7 @@
 
 import React from 'react';
 import AnimatedScribble from './ui/AnimatedScribble';
-import { CheckIcon, RocketIcon, Users, BookOpen } from 'lucide-react';
+import { CheckIcon, RocketIcon, Users, Calendar, Award, Star, Zap, DollarSign } from 'lucide-react';
 import { Card, CardContent } from './ui/card';
 
 const ProgramDetails = () => {
@@ -224,15 +224,15 @@ const ProgramDetails = () => {
                 <ul className="space-y-4">
                   <li className="flex items-start">
                     <CheckIcon size={16} className="text-afrinova-gold mt-1 mr-2 flex-shrink-0" />
-                    <span className="text-gray-300"><span className="font-bold text-white">Real Estate:</span> Earn KES 200,000+ per closed deal (we provide the buyer leads)</span>
+                    <span className="text-gray-300"><span className="font-bold text-white">Real Estate:</span> Earn 30% commission per closed deal (we provide the buyer leads)</span>
                   </li>
                   <li className="flex items-start">
                     <CheckIcon size={16} className="text-afrinova-gold mt-1 mr-2 flex-shrink-0" />
-                    <span className="text-gray-300"><span className="font-bold text-white">Automotive:</span> KES 30,000–100,000 commission per car sale</span>
+                    <span className="text-gray-300"><span className="font-bold text-white">Automotive:</span> 30% commission per car sale</span>
                   </li>
                   <li className="flex items-start">
                     <CheckIcon size={16} className="text-afrinova-gold mt-1 mr-2 flex-shrink-0" />
-                    <span className="text-gray-300"><span className="font-bold text-white">Health Products:</span> 25% commission on every supplement bundle sold</span>
+                    <span className="text-gray-300"><span className="font-bold text-white">Health Products:</span> 30% commission on every supplement bundle sold</span>
                   </li>
                 </ul>
               </CardContent>

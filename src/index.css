@@ -150,6 +150,21 @@
     animation: cash-pop 0.5s ease-out forwards;
     animation-delay: calc(var(--delay) * 0.1s);
   }
+  
+  /* Improved readability for gold text on dark backgrounds */
+  .text-afrinova-gold {
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Improved readability for neon text on dark backgrounds */
+  .text-afrinova-neon {
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Improved readability for red text on dark backgrounds */
+  .text-afrinova-red {
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
 }
 
 .pulse-btn {
@@ -197,6 +212,11 @@
   transform: translateY(0);
 }
 
+/* Reduce space between sections */
+section + section {
+  padding-top: 2rem;
+}
+
 /* Animated background */
 .animated-bg {
   position: relative;
@@ -210,4 +230,14 @@
   width: 200%;
   height: 100%;
   animation: wave 15s linear infinite;
+}
+
+@keyframes animate-float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: animate-float 3s ease-in-out infinite;
 }

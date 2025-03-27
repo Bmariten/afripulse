@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import Hero from '@/components/Hero';
 import RecruitmentProcess from '@/components/RecruitmentProcess';
@@ -12,7 +13,7 @@ const Index = () => {
     // Initialize intersection observer for animation
     const observerOptions = {
       threshold: 0.15,
-      rootMargin: '0px 0px -100px 0px'
+      rootMargin: '0px 0px -50px 0px' // Reduced margin to minimize gaps
     };
     
     const observer = new IntersectionObserver((entries) => {

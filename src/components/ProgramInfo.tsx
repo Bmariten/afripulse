@@ -10,7 +10,7 @@ const ProgramInfo = () => {
     <section className="py-16 bg-gradient-to-b from-afrinova-black via-afrinova-black/95 to-afrinova-black section-reveal">
       <div className="container max-w-6xl mx-auto px-4">
         <div className="text-center mb-12 space-y-4">
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-afrinova-neon to-afrinova-gold bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-afrinova-neon via-white to-afrinova-gold bg-clip-text text-transparent">
             360° Digital Marketing & Personal Development Powerhouse
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -46,7 +46,7 @@ const ProgramInfo = () => {
 
         {/* What You'll Master Section */}
         <div className="mb-16">
-          <h3 className="text-3xl font-bold text-afrinova-gold mb-10 text-center">
+          <h3 className="text-3xl font-bold text-white mb-10 text-center">
             What You'll Master
           </h3>
           
@@ -147,7 +147,7 @@ const ProgramInfo = () => {
         
         {/* How This Benefits YOU Section */}
         <div className="mb-16">
-          <h3 className="text-3xl font-bold text-afrinova-gold mb-10 text-center">
+          <h3 className="text-3xl font-bold text-white mb-10 text-center">
             How This Benefits YOU
           </h3>
           
@@ -156,7 +156,7 @@ const ProgramInfo = () => {
             <div className="glass-card p-6 rounded-xl border border-afrinova-neon/20">
               <div className="flex items-center mb-6">
                 <DollarSign className="h-8 w-8 text-afrinova-neon mr-4" />
-                <h4 className="text-2xl font-bold">Immediate Earning Potential</h4>
+                <h4 className="text-2xl font-bold text-white">Immediate Earning Potential</h4>
               </div>
               
               <p className="text-gray-300 mb-4">Start earning from Day 1 through our affiliate program:</p>
@@ -187,7 +187,7 @@ const ProgramInfo = () => {
             <div className="glass-card p-6 rounded-xl border border-afrinova-neon/20">
               <div className="flex items-center mb-6">
                 <Award className="h-8 w-8 text-afrinova-neon mr-4" />
-                <h4 className="text-2xl font-bold">Long-Term Advantages</h4>
+                <h4 className="text-2xl font-bold text-white">Long-Term Advantages</h4>
               </div>
               
               <div className="space-y-6">
@@ -210,7 +210,7 @@ const ProgramInfo = () => {
             <div className="glass-card p-6 rounded-xl border border-afrinova-neon/20">
               <div className="flex items-center mb-6">
                 <Users className="h-8 w-8 text-afrinova-neon mr-4" />
-                <h4 className="text-2xl font-bold">Elite Community Access</h4>
+                <h4 className="text-2xl font-bold text-white">Elite Community Access</h4>
               </div>
               
               <div className="relative">
@@ -234,7 +234,7 @@ const ProgramInfo = () => {
 
         {/* Transformation Roadmap */}
         <div className="mb-16">
-          <h3 className="text-3xl font-bold text-afrinova-gold mb-10 text-center">
+          <h3 className="text-3xl font-bold text-white mb-10 text-center">
             Your 8-Week Transformation Roadmap
           </h3>
           
@@ -242,19 +242,19 @@ const ProgramInfo = () => {
             {/* Phase 1 */}
             <div className="glass-card p-6 rounded-xl border border-afrinova-neon/20">
               <h4 className="text-2xl font-bold text-white text-center mb-4">Phase 1: Foundation</h4>
-              <p className="text-afrinova-red text-center mb-4">Weeks 1-4</p>
+              <p className="text-afrinova-gold text-center mb-4">Weeks 1-4</p>
               
               <ul className="space-y-4">
                 <li className="flex items-start">
-                  <span className="font-semibold text-afrinova-gold mr-2">Mindset:</span>
+                  <span className="font-semibold text-afrinova-neon mr-2">Mindset:</span>
                   <span className="text-gray-300">Rewire your money beliefs</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="font-semibold text-afrinova-gold mr-2">Skills:</span>
+                  <span className="font-semibold text-afrinova-neon mr-2">Skills:</span>
                   <span className="text-gray-300">Master lead generation & content creation</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="font-semibold text-afrinova-gold mr-2">Action:</span>
+                  <span className="font-semibold text-afrinova-neon mr-2">Action:</span>
                   <span className="text-gray-300">Set up your first 2 income streams</span>
                 </li>
               </ul>
@@ -263,7 +263,7 @@ const ProgramInfo = () => {
             {/* Phase 2 */}
             <div className="glass-card p-6 rounded-xl border border-afrinova-neon/20">
               <h4 className="text-2xl font-bold text-white text-center mb-4">Phase 2: Monetization</h4>
-              <p className="text-afrinova-red text-center mb-4">Weeks 5-6</p>
+              <p className="text-afrinova-gold text-center mb-4">Weeks 5-6</p>
               
               <ul className="space-y-4">
                 <li className="flex items-start">
@@ -284,19 +284,19 @@ const ProgramInfo = () => {
             {/* Phase 3 */}
             <div className="glass-card p-6 rounded-xl border border-afrinova-neon/20">
               <h4 className="text-2xl font-bold text-white text-center mb-4">Phase 3: Scale</h4>
-              <p className="text-afrinova-red text-center mb-4">Weeks 7-8</p>
+              <p className="text-afrinova-gold text-center mb-4">Weeks 7-8</p>
               
               <ul className="space-y-4">
                 <li className="flex items-start">
-                  <span className="font-semibold text-afrinova-gold mr-2">Mindset:</span>
+                  <span className="font-semibold text-afrinova-red mr-2">Mindset:</span>
                   <span className="text-gray-300">Think like a CEO</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="font-semibold text-afrinova-gold mr-2">Skills:</span>
+                  <span className="font-semibold text-afrinova-red mr-2">Skills:</span>
                   <span className="text-gray-300">Automation & team building</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="font-semibold text-afrinova-gold mr-2">Action:</span>
+                  <span className="font-semibold text-afrinova-red mr-2">Action:</span>
                   <span className="text-gray-300">Systemize to earn while you sleep</span>
                 </li>
               </ul>
@@ -305,11 +305,11 @@ const ProgramInfo = () => {
         </div>
         
         {/* Bonuses & Enrollment */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-8">
           {/* Bonuses */}
           <div className="glass-card p-6 rounded-xl border border-afrinova-neon/20">
-            <h3 className="text-3xl font-bold text-afrinova-gold mb-6">
-              Exclusive Bonuses <span className="text-white">(Limited Time)</span>
+            <h3 className="text-3xl font-bold text-white mb-6">
+              Exclusive Bonuses <span className="text-afrinova-gold">(Limited Time)</span>
             </h3>
             
             <div className="space-y-8">
@@ -347,7 +347,7 @@ const ProgramInfo = () => {
           <div>
             {/* Testimonial */}
             <div className="glass-card p-6 rounded-xl border border-afrinova-gold/20 mb-8">
-              <h3 className="text-2xl font-bold text-afrinova-gold mb-4">
+              <h3 className="text-2xl font-bold text-white mb-4">
                 Proven Results
               </h3>
               

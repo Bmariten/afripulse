@@ -154,10 +154,9 @@ const JoinSection = () => {
           
           <div className="flex flex-col items-center">
             <div className="mb-8">
-              <button
+              <div
                 onClick={handlePulseIn}
-                disabled={isSubmitting}
-                className={`${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                className={`${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}`}
               >
                 <PulseButton 
                   variant="neon" 
@@ -165,7 +164,7 @@ const JoinSection = () => {
                 >
                   Pulse In Now <ArrowRight className="inline-block ml-2" size={18} />
                 </PulseButton>
-              </button>
+              </div>
             </div>
             
             <div className="mb-8">
