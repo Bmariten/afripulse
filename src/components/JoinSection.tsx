@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from "@/hooks/use-toast";
 
 const JoinSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLSection>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -88,67 +88,73 @@ const JoinSection = () => {
         
         <div className="relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            {/* Step 1 */}
-            <div className="join-step glass-card p-6 rounded-xl border border-afrinova-neon/20 hover:border-afrinova-neon/50 transition-all duration-300 opacity-0">
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-afrinova-neon/20 text-afrinova-neon mb-4 mx-auto">
-                <span className="font-bold">1</span>
-              </div>
-              
-              <h3 className="text-xl font-bold text-white text-center mb-4">Hit "Pulse In" → Fill the form</h3>
-              
-              <div className="flex justify-center mb-4">
-                <div className="relative w-16 h-16">
-                  <svg className="w-full h-full animate-pulse" viewBox="0 0 24 24">
-                    <path d="M12 5V19M12 5L5 12M12 5L19 12" stroke="#00FF66" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                  </svg>
+            {/* Step 1 - Light Yellow Background */}
+            <div className="join-step rounded-lg shadow-lg opacity-0 overflow-hidden">
+              <div className="bg-[#FFF8E1] p-6 h-full">
+                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[#FFD54F]/20 text-[#F57F17] mb-4 mx-auto">
+                  <span className="font-bold">1</span>
                 </div>
-              </div>
-              
-              <p className="text-gray-300 text-center">
-                Click the button and take 2 minutes to tell us about yourself and your goals.
-              </p>
-            </div>
-            
-            {/* Step 2 */}
-            <div className="join-step glass-card p-6 rounded-xl border border-afrinova-gold/20 hover:border-afrinova-gold/50 transition-all duration-300 opacity-0">
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-afrinova-gold/20 text-afrinova-gold mb-4 mx-auto">
-                <span className="font-bold">2</span>
-              </div>
-              
-              <h3 className="text-xl font-bold text-white text-center mb-4">Get the nod via LinkedIn DM or WhatsApp</h3>
-              
-              <div className="flex justify-center mb-4">
-                <div className="relative w-24 h-16 bg-gray-800 rounded-lg p-2">
-                  <div className="text-xs text-gray-400 mb-1">Direct Message</div>
-                  <div className="text-white text-sm">You're in! Welcome to AfriPulse 🚀</div>
-                </div>
-              </div>
-              
-              <p className="text-gray-300 text-center">
-                We'll review your application and reach out within 24 hours.
-              </p>
-            </div>
-            
-            {/* Step 3 */}
-            <div className="join-step glass-card p-6 rounded-xl border border-afrinova-red/20 hover:border-afrinova-red/50 transition-all duration-300 opacity-0">
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-afrinova-red/20 text-afrinova-red mb-4 mx-auto">
-                <span className="font-bold">3</span>
-              </div>
-              
-              <h3 className="text-xl font-bold text-white text-center mb-4">Join Monday's Masterclass (8 PM EAT, Zoom)</h3>
-              
-              <div className="flex justify-center mb-4">
-                <div className="relative">
-                  <Calendar size={48} className="text-afrinova-red animate-float" />
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-afrinova-neon rounded-full flex items-center justify-center text-xs font-bold text-black">
-                    M
+                
+                <h3 className="text-xl font-bold text-gray-800 text-center mb-4">Hit "Pulse In" → Fill the form</h3>
+                
+                <div className="flex justify-center mb-4">
+                  <div className="relative w-16 h-16">
+                    <svg className="w-full h-full" viewBox="0 0 24 24">
+                      <path d="M12 5V19M12 5L5 12M12 5L19 12" stroke="#F57F17" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                    </svg>
                   </div>
                 </div>
+                
+                <p className="text-gray-700 text-center">
+                  Click the button and take 2 minutes to tell us about yourself and your goals.
+                </p>
               </div>
-              
-              <p className="text-gray-300 text-center">
-                Jump straight into learning with our exclusive onboarding masterclass.
-              </p>
+            </div>
+            
+            {/* Step 2 - Light Cyan Background */}
+            <div className="join-step rounded-lg shadow-lg opacity-0 overflow-hidden">
+              <div className="bg-[#E0F7FA] p-6 h-full">
+                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[#4DD0E1]/20 text-[#00ACC1] mb-4 mx-auto">
+                  <span className="font-bold">2</span>
+                </div>
+                
+                <h3 className="text-xl font-bold text-gray-800 text-center mb-4">Get the nod via LinkedIn DM or WhatsApp</h3>
+                
+                <div className="flex justify-center mb-4">
+                  <div className="relative w-24 h-16 bg-[#B2EBF2] rounded-lg p-2">
+                    <div className="text-xs text-gray-600 mb-1">Direct Message</div>
+                    <div className="text-gray-800 text-sm">You're in! Welcome to AfriPulse 🚀</div>
+                  </div>
+                </div>
+                
+                <p className="text-gray-700 text-center">
+                  We'll review your application and reach out within 24 hours.
+                </p>
+              </div>
+            </div>
+            
+            {/* Step 3 - Light Purple Background */}
+            <div className="join-step rounded-lg shadow-lg opacity-0 overflow-hidden">
+              <div className="bg-[#EDE7F6] p-6 h-full">
+                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[#B39DDB]/20 text-[#7E57C2] mb-4 mx-auto">
+                  <span className="font-bold">3</span>
+                </div>
+                
+                <h3 className="text-xl font-bold text-gray-800 text-center mb-4">Join Monday's Masterclass (8 PM EAT, Zoom)</h3>
+                
+                <div className="flex justify-center mb-4">
+                  <div className="relative">
+                    <Calendar size={48} className="text-[#7E57C2]" />
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#4DD0E1] rounded-full flex items-center justify-center text-xs font-bold text-white">
+                      M
+                    </div>
+                  </div>
+                </div>
+                
+                <p className="text-gray-700 text-center">
+                  Jump straight into learning with our exclusive onboarding masterclass.
+                </p>
+              </div>
             </div>
           </div>
           
@@ -173,7 +179,7 @@ const JoinSection = () => {
               </AnimatedScribble>
             </div>
             
-            <div className="glass-card p-4 rounded-full border border-afrinova-gold/30 flex items-center">
+            <div className="glass-card p-4 rounded-full border border-afrinova-gold/30 flex items-center bg-white/10">
               <div className="w-10 h-10 rounded-full bg-afrinova-gold/20 flex items-center justify-center mr-3">
                 <CheckIcon size={20} className="text-afrinova-gold" />
               </div>

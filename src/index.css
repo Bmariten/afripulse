@@ -153,17 +153,26 @@
   
   /* Improved readability for gold text on dark backgrounds */
   .text-afrinova-gold {
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
   }
   
   /* Improved readability for neon text on dark backgrounds */
   .text-afrinova-neon {
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
   }
   
   /* Improved readability for red text on dark backgrounds */
   .text-afrinova-red {
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Enhanced card styling for better readability */
+  .benefit-card h3, .join-step h3 {
+    @apply text-gray-800;
+  }
+  
+  .benefit-card p, .join-step p {
+    @apply text-gray-700;
   }
 }
 
@@ -214,7 +223,7 @@
 
 /* Reduce space between sections */
 section + section {
-  padding-top: 2rem;
+  padding-top: 0;
 }
 
 /* Animated background */
@@ -240,4 +249,36 @@ section + section {
 
 .animate-float {
   animation: animate-float 3s ease-in-out infinite;
+}
+
+@keyframes cash-pop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slide-up {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out forwards;
+}
+
+/* Card colors */
+.card-cream {
+  @apply bg-[#FFF8E1];
+}
+
+.card-mint {
+  @apply bg-[#E0F7FA];
+}
+
+.card-lavender {
+  @apply bg-[#EDE7F6];
+}
+
+.card-pink {
+  @apply bg-[#FFEBEE];
 }
