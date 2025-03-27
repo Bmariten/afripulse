@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import PulseButton from '@/components/ui/PulseButton';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, CheckIcon, Loader2, Send } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Define form schema with validation
 const formSchema = z.object({
@@ -29,6 +29,8 @@ type FormValues = z.infer<typeof formSchema>;
 const ContactForm = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionSuccess, setSubmissionSuccess] = useState(false);
+  const navigate = useNavigate();
   
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -42,6 +44,23 @@ const ContactForm = () => {
       goals: '',
     },
   });
+
+  // Effect to redirect back to homepage after successful submission
+  useEffect(() => {
+    let redirectTimer: number | undefined;
+    
+    if (submissionSuccess) {
+      redirectTimer = window.setTimeout(() => {
+        navigate('/');
+      }, 3000); // 3 seconds delay before redirect
+    }
+    
+    return () => {
+      if (redirectTimer) {
+        window.clearTimeout(redirectTimer);
+      }
+    };
+  }, [submissionSuccess, navigate]);
 
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
@@ -58,16 +77,17 @@ const ContactForm = () => {
       // Add form name for email service to identify
       formData.append('form-name', 'afripulse-contact');
       
-      // Send data via email using formSubmit.co service
-      const response = await fetch('https://formsubmit.co/ask@afripulse.app', {
+      // Send data via formsubmit.co email service
+      const response = await fetch('https://formsubmit.co/ajax/ask@afripulse.app', {
         method: 'POST',
         body: formData,
-        headers: {
-          'Accept': 'application/json',
-        },
       });
       
-      if (response.ok) {
+      const result = await response.json();
+      
+      if (result.success === "true" || response.ok) {
+        console.log("Form submitted successfully:", result);
+        
         // Show success toast
         toast({
           title: "Application Submitted!",
@@ -75,9 +95,14 @@ const ContactForm = () => {
           variant: "default",
         });
         
+        // Set submission success state to trigger redirect
+        setSubmissionSuccess(true);
+        
         // Reset form
         form.reset();
       } else {
+        console.error("Form submission error:", result);
+        
         // Show error toast if response is not OK
         toast({
           title: "Submission Failed",
@@ -118,7 +143,11 @@ const ContactForm = () => {
           </div>
           
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" data-netlify="true" name="afripulse-contact">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" name="afripulse-contact">
+              {/* Hidden field for formsubmit.co to know the destination */}
+              <input type="hidden" name="_next" value={window.location.origin} />
+              <input type="hidden" name="_subject" value="New AfriPulse Application Submission" />
+              
               {/* Personal Information */}
               <div className="space-y-4">
                 <h2 className="text-xl font-semibold text-afrinova-gold">Personal Information</h2>
