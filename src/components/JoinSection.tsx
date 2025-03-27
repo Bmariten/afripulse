@@ -1,4 +1,4 @@
-
+// JoinSection.tsx
 import React, { useEffect, useRef, useState } from 'react';
 import AnimatedScribble from './ui/AnimatedScribble';
 import PulseButton from './ui/PulseButton';
@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from "@/hooks/use-toast";
 
 const JoinSection = () => {
-  const sectionRef = useRef<HTMLSection>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const JoinSection = () => {
             steps.forEach((step, index) => {
               setTimeout(() => {
                 step.classList.add('animate-slide-up');
-              }, index * 200);
+              }, index * 100);
             });
             
             observer.unobserve(entry.target);
@@ -52,7 +52,7 @@ const JoinSection = () => {
   return (
     <section 
       ref={sectionRef} 
-      className="py-24 px-4 bg-gradient-to-br from-gray-900 to-black section-reveal overflow-hidden"
+      className="pt-0 pb-16 px-4 bg-black section-reveal overflow-hidden"
     >
       <div className="container mx-auto max-w-5xl relative">
         {/* Background decorative elements */}
@@ -67,7 +67,7 @@ const JoinSection = () => {
                   left: `${(i % 2) * 50}%`,
                   width: '100%',
                   height: '1px',
-                  background: i % 2 === 0 ? '#00FF66' : '#D4AF37',
+                  background: '#D4AF37',
                   transform: `rotate(${i * 5}deg)`
                 }}
               ></div>
@@ -75,7 +75,7 @@ const JoinSection = () => {
           </div>
         </div>
         
-        <div className="text-center mb-16 relative z-10">
+        <div className="text-center mb-12 relative z-10">
           <h2 className="text-4xl md:text-5xl font-bold text-white inline-block">
             <AnimatedScribble type="arrow" color="gold">
               Ready to Rise?
@@ -121,9 +121,10 @@ const JoinSection = () => {
                 <h3 className="text-xl font-bold text-gray-800 text-center mb-4">Get the nod via LinkedIn DM or WhatsApp</h3>
                 
                 <div className="flex justify-center mb-4">
-                  <div className="relative w-24 h-16 bg-[#B2EBF2] rounded-lg p-2">
+                  <div className="relative w-72 h-20 bg-[#B2EBF2] rounded-lg p-2">
                     <div className="text-xs text-gray-600 mb-1">Direct Message</div>
-                    <div className="text-gray-800 text-sm">You're in! Welcome to AfriPulse 🚀</div>
+                    <div className="text-gray-800 text-sm mb-2">You're in! Welcome to AfriPulse 🚀</div>
+                    <div className="text-xs text-gray-500">We'll contact you within 24 hours</div>
                   </div>
                 </div>
                 

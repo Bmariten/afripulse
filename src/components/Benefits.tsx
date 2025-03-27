@@ -1,4 +1,4 @@
-
+// Benefits.tsx
 import React, { useEffect, useRef } from 'react';
 import AnimatedScribble from './ui/AnimatedScribble';
 import { CheckIcon, Users, BookOpen, RocketIcon } from 'lucide-react';
@@ -42,13 +42,13 @@ const Benefits = () => {
   return (
     <section 
       ref={sectionRef} 
-      className="py-24 px-4 bg-benefit-pattern section-reveal"
-      style={{ background: 'linear-gradient(135deg, #111111 0%, #292929 100%)' }}
+      className="pt-0 pb-8 px-4 bg-black section-reveal"
+      style={{ background: 'linear-gradient(135deg, #000000 0%, #1a1a1a 100%)' }}
     >
       <div className="container mx-auto max-w-6xl">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-white">
-            <AnimatedScribble type="star" color="neon">
+            <AnimatedScribble type="star" color="gold">
               Why Pulse With Us?
             </AnimatedScribble>
           </h2>

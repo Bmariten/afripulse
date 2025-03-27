@@ -1,85 +1,9 @@
-
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Send } from 'lucide-react';
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    location: '',
-    background: '',
-    goals: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const { toast } = useToast();
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Check if all required fields are filled
-    if (!formData.name || !formData.email || !formData.phone) {
-      toast({
-        title: "Missing information",
-        description: "Please fill out all required fields.",
-        variant: "destructive"
-      });
-      setIsSubmitting(false);
-      return;
-    }
-
-    try {
-      // Send data to FormSubmit.co service which will forward to ask@afripulse.app
-      const response = await fetch("https://formsubmit.co/ajax/ask@afripulse.app", {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          location: formData.location,
-          background: formData.background,
-          goals: formData.goals,
-          _subject: "New AfriPulse Program Inquiry"
-        })
-      });
-
-      if (response.ok) {
-        toast({
-          title: "Thank you!",
-          description: "Your application has been received. We'll contact you within 24 hours.",
-        });
-        
-        // Wait for toast to be seen, then redirect
-        setTimeout(() => {
-          navigate('/');
-        }, 3000);
-      } else {
-        throw new Error('Form submission failed');
-      }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      toast({
-        title: "Submission error",
-        description: "There was a problem sending your information. Please try again.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-afrinova-black to-gray-900 text-white py-16 px-4">
@@ -102,7 +26,12 @@ const ContactForm = () => {
             Our team will review your application and contact you within 24 hours.
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form 
+            action={`mailto:ask@afripulse.app?subject=New AfriPulse Program Application`}
+            method="POST"
+            encType="text/plain"
+            className="space-y-6"
+          >
             {/* Name */}
             <div>
               <label htmlFor="name" className="block text-white font-medium mb-2">
@@ -113,9 +42,8 @@ const ContactForm = () => {
                 name="name"
                 type="text"
                 required
-                value={formData.name}
-                onChange={handleChange}
                 className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-afrinova-neon"
+                placeholder="Enter your full name"
               />
             </div>
 
@@ -129,9 +57,8 @@ const ContactForm = () => {
                 name="email"
                 type="email"
                 required
-                value={formData.email}
-                onChange={handleChange}
                 className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-afrinova-neon"
+                placeholder="Enter your email address"
               />
             </div>
 
@@ -145,8 +72,6 @@ const ContactForm = () => {
                 name="phone"
                 type="tel"
                 required
-                value={formData.phone}
-                onChange={handleChange}
                 className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-afrinova-neon"
                 placeholder="Include country code e.g. +254"
               />
@@ -161,9 +86,8 @@ const ContactForm = () => {
                 id="location"
                 name="location"
                 type="text"
-                value={formData.location}
-                onChange={handleChange}
                 className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-afrinova-neon"
+                placeholder="Enter your city and country"
               />
             </div>
 
@@ -176,8 +100,6 @@ const ContactForm = () => {
                 id="background"
                 name="background"
                 rows={3}
-                value={formData.background}
-                onChange={handleChange}
                 className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-afrinova-neon"
                 placeholder="Tell us about your current job, skills, or business experience"
               />
@@ -192,8 +114,6 @@ const ContactForm = () => {
                 id="goals"
                 name="goals"
                 rows={3}
-                value={formData.goals}
-                onChange={handleChange}
                 className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-afrinova-neon"
                 placeholder="What do you hope to achieve with AfriPulse?"
               />
@@ -202,19 +122,25 @@ const ContactForm = () => {
             <div className="pt-4">
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className={`w-full flex items-center justify-center bg-gradient-to-r from-afrinova-neon to-afrinova-gold text-black font-bold py-3 px-6 rounded-lg hover:opacity-90 transition-opacity ${
-                  isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
-                }`}
+                className="w-full flex items-center justify-center bg-gradient-to-r from-afrinova-neon to-afrinova-gold text-black font-bold py-3 px-6 rounded-lg hover:opacity-90 transition-opacity"
               >
-                {isSubmitting ? (
-                  <>Processing...</>
-                ) : (
-                  <>
-                    Submit Application <Send size={18} className="ml-2" />
-                  </>
-                )}
+                Submit Application <Send size={18} className="ml-2" />
               </button>
+            </div>
+
+            {/* WhatsApp Fallback */}
+            <div className="text-center mt-4">
+              <p className="text-gray-400 text-sm">
+                Having trouble? Contact us directly via{' '}
+                <a 
+                  href="https://wa.me/254116330665" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-afrinova-neon hover:text-afrinova-neon/80"
+                >
+                  WhatsApp
+                </a>
+              </p>
             </div>
           </form>
         </div>
