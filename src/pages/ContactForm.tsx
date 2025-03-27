@@ -1,123 +1,80 @@
 
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import PulseButton from '@/components/ui/PulseButton';
-import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, CheckIcon, Loader2, Send } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
-
-// Define form schema with validation
-const formSchema = z.object({
-  fullName: z.string().min(2, { message: 'Full name must be at least 2 characters' }),
-  email: z.string().email({ message: 'Please enter a valid email address' }),
-  phone: z.string().min(10, { message: 'Phone number must be at least 10 digits' }),
-  linkedInUrl: z.string().url({ message: 'Please enter a valid LinkedIn URL' }).optional().or(z.literal('')),
-  location: z.string().min(2, { message: 'Please enter your location' }),
-  marketingExperience: z.enum(['none', 'some', 'experienced'], {
-    required_error: 'Please select your experience level',
-  }),
-  goals: z.string().min(10, { message: 'Please tell us more about your goals' }).max(500, { message: 'Maximum 500 characters' }),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from "@/hooks/use-toast";
+import { ArrowLeft, Send } from 'lucide-react';
 
 const ContactForm = () => {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submissionSuccess, setSubmissionSuccess] = useState(false);
-  const navigate = useNavigate();
-  
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      fullName: '',
-      email: '',
-      phone: '',
-      linkedInUrl: '',
-      location: '',
-      marketingExperience: 'none',
-      goals: '',
-    },
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    location: '',
+    background: '',
+    goals: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
-  // Effect to redirect back to homepage after successful submission
-  useEffect(() => {
-    let redirectTimer: number | undefined;
-    
-    if (submissionSuccess) {
-      redirectTimer = window.setTimeout(() => {
-        navigate('/');
-      }, 3000); // 3 seconds delay before redirect
-    }
-    
-    return () => {
-      if (redirectTimer) {
-        window.clearTimeout(redirectTimer);
-      }
-    };
-  }, [submissionSuccess, navigate]);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
-  const onSubmit = async (data: FormValues) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsSubmitting(true);
-    
+
+    // Check if all required fields are filled
+    if (!formData.name || !formData.email || !formData.phone) {
+      toast({
+        title: "Missing information",
+        description: "Please fill out all required fields.",
+        variant: "destructive"
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
-      // Create form data for submission
-      const formData = new FormData();
-      
-      // Add all form values to formData
-      Object.entries(data).forEach(([key, value]) => {
-        formData.append(key, value);
+      // Send data to FormSubmit.co service which will forward to ask@afripulse.app
+      const response = await fetch("https://formsubmit.co/ajax/ask@afripulse.app", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          location: formData.location,
+          background: formData.background,
+          goals: formData.goals,
+          _subject: "New AfriPulse Program Inquiry"
+        })
       });
-      
-      // Add form name for email service to identify
-      formData.append('form-name', 'afripulse-contact');
-      
-      // Send data via formsubmit.co email service
-      const response = await fetch('https://formsubmit.co/ajax/ask@afripulse.app', {
-        method: 'POST',
-        body: formData,
-      });
-      
-      const result = await response.json();
-      
-      if (result.success === "true" || response.ok) {
-        console.log("Form submitted successfully:", result);
-        
-        // Show success toast
+
+      if (response.ok) {
         toast({
-          title: "Application Submitted!",
-          description: "We'll review your details and get back to you shortly.",
-          variant: "default",
+          title: "Thank you!",
+          description: "Your application has been received. We'll contact you within 24 hours.",
         });
         
-        // Set submission success state to trigger redirect
-        setSubmissionSuccess(true);
-        
-        // Reset form
-        form.reset();
+        // Wait for toast to be seen, then redirect
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
       } else {
-        console.error("Form submission error:", result);
-        
-        // Show error toast if response is not OK
-        toast({
-          title: "Submission Failed",
-          description: "There was a problem sending your application. Please try again.",
-          variant: "destructive",
-        });
+        throw new Error('Form submission failed');
       }
     } catch (error) {
       console.error('Form submission error:', error);
-      
-      // Show error toast on exception
       toast({
-        title: "Submission Failed",
-        description: "There was a problem sending your application. Please try again.",
-        variant: "destructive",
+        title: "Submission error",
+        description: "There was a problem sending your information. Please try again.",
+        variant: "destructive"
       });
     } finally {
       setIsSubmitting(false);
@@ -125,179 +82,141 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-afrinova-black text-white py-16 px-4">
-      <div className="container max-w-3xl mx-auto">
-        <Link to="/" className="inline-flex items-center text-afrinova-neon hover:underline mb-8">
-          <ArrowLeft size={16} className="mr-2" />
-          Back to Home
-        </Link>
-        
-        <div className="glass-card p-8 rounded-xl border border-afrinova-neon/20">
-          <div className="mb-10 text-center">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-afrinova-neon to-afrinova-gold bg-clip-text text-transparent mb-4">
-              Join AfriPulse
-            </h1>
-            <p className="text-gray-300 max-w-xl mx-auto">
-              Take the first step towards financial independence. Fill out the form below to apply for our affiliate marketing program.
-            </p>
-          </div>
+    <div className="min-h-screen bg-gradient-to-b from-afrinova-black to-gray-900 text-white py-16 px-4">
+      <div className="container mx-auto max-w-3xl">
+        <button 
+          onClick={() => navigate(-1)}
+          className="flex items-center text-afrinova-neon hover:text-afrinova-neon/80 mb-8 transition-colors"
+        >
+          <ArrowLeft size={20} className="mr-2" />
+          Back
+        </button>
+
+        <div className="glass-card p-8 rounded-xl border border-afrinova-gold/30">
+          <h1 className="text-3xl md:text-4xl font-bold text-center mb-8">
+            Join AfriPulse
+          </h1>
           
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" name="afripulse-contact">
-              {/* Hidden field for formsubmit.co to know the destination */}
-              <input type="hidden" name="_next" value={window.location.origin} />
-              <input type="hidden" name="_subject" value="New AfriPulse Application Submission" />
-              
-              {/* Personal Information */}
-              <div className="space-y-4">
-                <h2 className="text-xl font-semibold text-afrinova-gold">Personal Information</h2>
-                
-                <FormField
-                  control={form.control}
-                  name="fullName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">Full Name*</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Your full name" {...field} className="bg-gray-900 border-gray-700 text-white" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">Email Address*</FormLabel>
-                        <FormControl>
-                          <Input placeholder="your.email@example.com" {...field} className="bg-gray-900 border-gray-700 text-white" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">Phone Number*</FormLabel>
-                        <FormControl>
-                          <Input placeholder="+254 7XX XXX XXX" {...field} className="bg-gray-900 border-gray-700 text-white" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="linkedInUrl"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">LinkedIn Profile URL (Optional)</FormLabel>
-                        <FormControl>
-                          <Input placeholder="https://linkedin.com/in/yourusername" {...field} className="bg-gray-900 border-gray-700 text-white" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="location"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">Location*</FormLabel>
-                        <FormControl>
-                          <Input placeholder="City, Country" {...field} className="bg-gray-900 border-gray-700 text-white" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
-              
-              {/* Experience & Goals */}
-              <div className="space-y-4">
-                <h2 className="text-xl font-semibold text-afrinova-gold">Experience & Goals</h2>
-                
-                <FormField
-                  control={form.control}
-                  name="marketingExperience"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">Marketing Experience*</FormLabel>
-                      <FormControl>
-                        <select 
-                          {...field}
-                          className="flex h-10 w-full rounded-md border border-gray-700 bg-gray-900 px-3 py-2 text-base text-white ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                        >
-                          <option value="none">No experience (I'm new to this)</option>
-                          <option value="some">Some experience (I've tried marketing before)</option>
-                          <option value="experienced">Experienced (I've worked in marketing)</option>
-                        </select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="goals"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">
-                        What are your goals with AfriPulse?*
-                      </FormLabel>
-                      <FormControl>
-                        <Textarea 
-                          placeholder="Tell us about what you hope to achieve..." 
-                          {...field} 
-                          className="bg-gray-900 border-gray-700 text-white min-h-[120px]" 
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              
-              <div className="pt-4 flex justify-center">
-                <PulseButton type="submit" variant="neon" className="w-full max-w-xs flex items-center justify-center gap-2" disabled={isSubmitting}>
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 size={18} className="animate-spin" />
-                      Submitting...
-                    </>
-                  ) : (
-                    <>
-                      <Send size={18} />
-                      Submit Application
-                    </>
-                  )}
-                </PulseButton>
-              </div>
-              
-              <div className="text-center text-sm text-gray-400 mt-6">
-                <div className="flex items-center justify-center mb-2">
-                  <CheckIcon size={16} className="text-afrinova-neon mr-2" />
-                  <span>Your information is secure and will never be shared.</span>
-                </div>
-                <p>By submitting, you agree to our Terms of Service and Privacy Policy.</p>
-              </div>
-            </form>
-          </Form>
+          <p className="text-gray-300 text-center mb-8">
+            Complete this short form to start your journey toward financial independence.
+            Our team will review your application and contact you within 24 hours.
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Name */}
+            <div>
+              <label htmlFor="name" className="block text-white font-medium mb-2">
+                Full Name <span className="text-afrinova-red">*</span>
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-afrinova-neon"
+              />
+            </div>
+
+            {/* Email */}
+            <div>
+              <label htmlFor="email" className="block text-white font-medium mb-2">
+                Email Address <span className="text-afrinova-red">*</span>
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-afrinova-neon"
+              />
+            </div>
+
+            {/* Phone */}
+            <div>
+              <label htmlFor="phone" className="block text-white font-medium mb-2">
+                Phone Number <span className="text-afrinova-red">*</span>
+              </label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                required
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-afrinova-neon"
+                placeholder="Include country code e.g. +254"
+              />
+            </div>
+
+            {/* Location */}
+            <div>
+              <label htmlFor="location" className="block text-white font-medium mb-2">
+                Location (City, Country)
+              </label>
+              <input
+                id="location"
+                name="location"
+                type="text"
+                value={formData.location}
+                onChange={handleChange}
+                className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-afrinova-neon"
+              />
+            </div>
+
+            {/* Background */}
+            <div>
+              <label htmlFor="background" className="block text-white font-medium mb-2">
+                Your Background
+              </label>
+              <textarea
+                id="background"
+                name="background"
+                rows={3}
+                value={formData.background}
+                onChange={handleChange}
+                className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-afrinova-neon"
+                placeholder="Tell us about your current job, skills, or business experience"
+              />
+            </div>
+
+            {/* Goals */}
+            <div>
+              <label htmlFor="goals" className="block text-white font-medium mb-2">
+                Your Goals
+              </label>
+              <textarea
+                id="goals"
+                name="goals"
+                rows={3}
+                value={formData.goals}
+                onChange={handleChange}
+                className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-afrinova-neon"
+                placeholder="What do you hope to achieve with AfriPulse?"
+              />
+            </div>
+
+            <div className="pt-4">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full flex items-center justify-center bg-gradient-to-r from-afrinova-neon to-afrinova-gold text-black font-bold py-3 px-6 rounded-lg hover:opacity-90 transition-opacity ${
+                  isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                }`}
+              >
+                {isSubmitting ? (
+                  <>Processing...</>
+                ) : (
+                  <>
+                    Submit Application <Send size={18} className="ml-2" />
+                  </>
+                )}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

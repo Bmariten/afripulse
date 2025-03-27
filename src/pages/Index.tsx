@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import Hero from '@/components/Hero';
 import RecruitmentProcess from '@/components/RecruitmentProcess';
@@ -39,8 +38,8 @@ const Index = () => {
     <div className="min-h-screen bg-afrinova-black text-white overflow-x-hidden">
       <Hero />
       <ProgramDetails />
-      <ProgramInfo />
       <RecruitmentProcess />
+      <ProgramInfo />
       <Benefits />
       <JoinSection />
       <Footer />

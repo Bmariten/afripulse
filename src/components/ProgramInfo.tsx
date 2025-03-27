@@ -55,7 +55,8 @@ const ProgramInfo = () => {
             <div className="glass-card p-6 rounded-xl border border-afrinova-neon/20">
               <div className="flex items-center mb-6">
                 <Zap className="h-8 w-8 text-afrinova-neon mr-4" />
-                <h4 className="text-2xl font-bold">Personal Development Pillars (Mondays)</h4>
+                <h4 className="text-2xl font-bold text-white">Personal Development Pillars</h4>
+                <span className="ml-2 text-afrinova-gold">(Mondays)</span>
               </div>
               
               <div className="space-y-6">
@@ -89,7 +90,8 @@ const ProgramInfo = () => {
             <div className="glass-card p-6 rounded-xl border border-afrinova-neon/20">
               <div className="flex items-center mb-6">
                 <Zap className="h-8 w-8 text-afrinova-neon mr-4" />
-                <h4 className="text-2xl font-bold">Digital Marketing Domination (Fridays)</h4>
+                <h4 className="text-2xl font-bold text-white">Digital Marketing Domination</h4>
+                <span className="ml-2 text-afrinova-gold">(Fridays)</span>
               </div>
               
               <div className="space-y-6">
@@ -123,7 +125,7 @@ const ProgramInfo = () => {
             <div className="glass-card p-6 rounded-xl border border-afrinova-neon/20 md:col-span-2">
               <div className="flex items-center mb-6">
                 <Calendar className="h-8 w-8 text-afrinova-neon mr-4" />
-                <h4 className="text-2xl font-bold">Weekly Physical Workshops</h4>
+                <h4 className="text-2xl font-bold text-white">Weekly Physical Workshops</h4>
               </div>
               
               <p className="text-gray-300 mb-4">Hands-on sessions alternating between:</p>
@@ -163,19 +165,19 @@ const ProgramInfo = () => {
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-afrinova-neon mr-2 mt-1 flex-shrink-0" />
                   <span className="text-gray-300">
-                    <span className="font-semibold text-white">Real Estate:</span> Earn KES 200,000+ per closed deal (we provide the buyer leads)
+                    <span className="font-semibold text-white">Real Estate:</span> Earn 30% commission per closed deal (we provide the buyer leads)
                   </span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-afrinova-neon mr-2 mt-1 flex-shrink-0" />
                   <span className="text-gray-300">
-                    <span className="font-semibold text-white">Automotive:</span> KES 30,000–100,000 commission per car sale
+                    <span className="font-semibold text-white">Automotive:</span> 30% commission per car sale
                   </span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-afrinova-neon mr-2 mt-1 flex-shrink-0" />
                   <span className="text-gray-300">
-                    <span className="font-semibold text-white">Health Products:</span> 25% commission on every supplement bundle sold
+                    <span className="font-semibold text-white">Health Products:</span> 30% commission on every supplement bundle sold
                   </span>
                 </li>
               </ul>
@@ -239,7 +241,7 @@ const ProgramInfo = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Phase 1 */}
             <div className="glass-card p-6 rounded-xl border border-afrinova-neon/20">
-              <h4 className="text-2xl font-bold text-center mb-4">Phase 1: Foundation</h4>
+              <h4 className="text-2xl font-bold text-white text-center mb-4">Phase 1: Foundation</h4>
               <p className="text-afrinova-red text-center mb-4">Weeks 1-4</p>
               
               <ul className="space-y-4">
@@ -260,7 +262,7 @@ const ProgramInfo = () => {
             
             {/* Phase 2 */}
             <div className="glass-card p-6 rounded-xl border border-afrinova-neon/20">
-              <h4 className="text-2xl font-bold text-center mb-4">Phase 2: Monetization</h4>
+              <h4 className="text-2xl font-bold text-white text-center mb-4">Phase 2: Monetization</h4>
               <p className="text-afrinova-red text-center mb-4">Weeks 5-6</p>
               
               <ul className="space-y-4">
@@ -281,7 +283,7 @@ const ProgramInfo = () => {
             
             {/* Phase 3 */}
             <div className="glass-card p-6 rounded-xl border border-afrinova-neon/20">
-              <h4 className="text-2xl font-bold text-center mb-4">Phase 3: Scale</h4>
+              <h4 className="text-2xl font-bold text-white text-center mb-4">Phase 3: Scale</h4>
               <p className="text-afrinova-red text-center mb-4">Weeks 7-8</p>
               
               <ul className="space-y-4">

@@ -1,12 +1,16 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import AnimatedScribble from './ui/AnimatedScribble';
 import PulseButton from './ui/PulseButton';
 import { CheckIcon, Calendar, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useToast } from "@/hooks/use-toast";
 
 const JoinSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+  const navigate = useNavigate();
   
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -40,6 +44,10 @@ const JoinSection = () => {
       }
     };
   }, []);
+
+  const handlePulseIn = () => {
+    navigate('/form');
+  };
   
   return (
     <section 
@@ -146,14 +154,18 @@ const JoinSection = () => {
           
           <div className="flex flex-col items-center">
             <div className="mb-8">
-              <Link to="/form">
+              <button
+                onClick={handlePulseIn}
+                disabled={isSubmitting}
+                className={`${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+              >
                 <PulseButton 
                   variant="neon" 
                   className="text-lg"
                 >
                   Pulse In Now <ArrowRight className="inline-block ml-2" size={18} />
                 </PulseButton>
-              </Link>
+              </button>
             </div>
             
             <div className="mb-8">
